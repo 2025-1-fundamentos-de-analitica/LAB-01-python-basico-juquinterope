@@ -18,5 +18,35 @@ def pregunta_10():
      ('E', 2, 3),
      ('E', 3, 3)]
 
-
     """
+    import os
+
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, '..', 'files', 'input', 'data.csv')
+    # Abre el archivo data.csv en modo lectura
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    # Lista para almacenar las tuplas
+    resultado = []
+    
+    for line in lines:
+        # Divide la línea por tabulaciones
+        columns = line.strip().split('\t')
+        
+        # Obtiene la letra de la columna 1
+        letra = columns[0]
+        
+        # Cuenta elementos en columnas 4 y 5
+        elementos_col4 = len(columns[3].split(','))
+        elementos_col5 = len(columns[4].split(','))
+        
+        # Crea la tupla y la anade al resultado
+        resultado.append((letra, elementos_col4, elementos_col5))
+    
+    return resultado
+
+
+if __name__ == '__main__':
+    print(pregunta_10())

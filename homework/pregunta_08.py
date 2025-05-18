@@ -27,3 +27,33 @@ def pregunta_08():
      (9, ['A', 'B', 'C', 'E'])]
 
     """
+    import os
+
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, '..', 'files', 'input', 'data.csv')
+    # Abre el archivo data.csv en modo lectura
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    valores = {}
+
+    for line in lines:
+        # La tabulacion es el separador de columnas
+        columns = line.strip().split('\t')
+        valor = int(columns[1])
+        letra = columns[0]
+
+        # Agrega la letra a la lista correspondiente al valor
+        if valor in valores:
+            if letra not in valores[valor]:
+                valores[valor].append(letra)
+        else:
+            valores[valor] = [letra]
+    # Convierte el diccionario a una lista de tuplas
+    sorted_values = sorted((k, sorted(set(v))) for k, v in valores.items())
+    return sorted_values
+
+
+if __name__ == '__main__':
+    print(pregunta_08())

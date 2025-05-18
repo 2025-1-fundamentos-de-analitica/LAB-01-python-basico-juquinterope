@@ -26,3 +26,41 @@ def pregunta_06():
      ('jjj', 5, 17)]
 
     """
+    import os
+
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, '..', 'files', 'input', 'data.csv')
+    # Abre el archivo data.csv en modo lectura
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    valores = {}
+
+    for line in lines:
+        # La tabulacion es el separador de columnas
+        columns = line.strip().split('\t')
+        letra = columns[4]
+
+        # Separa las claves y valores
+        claves_valores = letra.split(',')
+        for clave_valor in claves_valores:
+            clave, valor = clave_valor.split(':')
+            valor = int(valor)
+
+            # Si la clave no esta en el diccionario, inicializa su lista
+            if clave not in valores:
+                valores[clave] = [valor, valor]
+            else:
+                # Actualiza el maximo y minimo
+                valores[clave][0] = max(valores[clave][0], valor)
+                valores[clave][1] = min(valores[clave][1], valor)
+
+    # Convierte el diccionario a una lista de tuplas
+    sorted_values = sorted([(k, v[1], v[0]) for k, v in valores.items()])
+
+    return sorted_values
+
+
+if __name__ == '__main__':
+    print(pregunta_06())

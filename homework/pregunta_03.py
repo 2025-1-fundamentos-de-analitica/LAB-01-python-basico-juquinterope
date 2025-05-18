@@ -15,3 +15,34 @@ def pregunta_03():
     [('A', 53), ('B', 36), ('C', 27), ('D', 31), ('E', 67)]
 
     """
+    import os
+
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, '..', 'files', 'input', 'data.csv')
+    # Abre el archivo data.csv en modo lectura
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    letras = {}
+
+    for line in lines:
+        # La tabulacion es el separador de columnas
+        columns = line.strip().split('\t')
+        letter = columns[0]
+        value = int(columns[1])
+
+        # Suma el valor a la letra correspondiente
+        if letter in letras:
+            letras[letter] += value
+        else:
+            letras[letter] = value
+
+    # Convierte el diccionario a una lista de tuplas
+    sorted_sums = sorted(letras.items())
+
+    return sorted_sums
+
+
+if __name__ == '__main__':
+    print(pregunta_03())

@@ -24,3 +24,31 @@ def pregunta_09():
      'jjj': 18}}
 
     """
+    import os
+
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, '..', 'files', 'input', 'data.csv')
+    # Abre el archivo data.csv en modo lectura
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    valores = {}
+    for line in lines:
+        # Divide la línea por tabulaciones
+        columns = line.strip().split('\t')
+        # Obtiene la columna 5 (índice 4) y divide por comas
+        elementos = columns[4].split(',')
+        
+        # Para cada elemento en la columna 5
+        for elemento in elementos:
+            # Extrae solo la clave (parte antes del ':')
+            clave = elemento.split(':')[0]
+            # Incrementa el contador para la clave
+            valores[clave] = valores.get(clave, 0) + 1
+            
+    return dict(sorted(valores.items()))
+
+
+if __name__ == '__main__':
+    print(pregunta_09())
